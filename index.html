@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digit-Hunter 2.0</title>
+    <title>AR-INTEL: NEURAL SENTINEL</title>
     <style>
         :root {
             --bg-base: #050505;
@@ -98,7 +98,7 @@
             display: inline-block; padding: 0.4rem 1.2rem; background: rgba(251, 113, 133, 0.1);
             border: 1px solid rgba(251, 113, 133, 0.3); border-radius: 50px; color: var(--glow-primary);
             font-size: 0.75rem; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; box-shadow: 0 0 15px rgba(251, 113, 133, 0.1);
-            margin-bottom: 1.5rem; /* THIS IS THE NEW GAP ADDED */
+            margin-bottom: 1.5rem; /* GAP ADDED BETWEEN BADGE AND TITLE */
         }
 
         /* --- SEARCH CONSOLE --- */
@@ -234,8 +234,9 @@
         <div class="modal-content">
             <div class="warning-icon">⚠️</div>
             <h2>System Override</h2>
-            <p>You are accessing a secured digital forensics environment.<br> This portal is for testing purpose only <br> This will Provide 80% accurate Data,<br> Use with Responsibly <br>
-            Devloped By Aditya Raj</p>
+            <p>You are accessing AR-INTEL: NEURAL SENTINEL.<br> 
+            Authorized Academic Demonstration Only.<br> 
+            Developed By Aditya Raj</p>
             <button class="modal-btn" onclick="acceptWarning()">I Understand</button>
         </div>
     </div>
@@ -250,7 +251,7 @@
             <span class="input-prefix">></span>
             <input type="tel" id="phoneNumber" placeholder="Enter Number without +91" autocomplete="off">
         </div>
-        <button id="searchBtn" class="initiate-btn" onclick="performLookup()">Extract</button>
+        <button id="searchBtn" class="initiate-btn" onclick="performLookup()">TRACE</button>
     </div>
 
     <div class="terminal-loader" id="loader">
@@ -267,13 +268,15 @@
         <div class="credit-name">ADITYA RAJ</div>
     </div>
 
-        <script>
+    <script>
+        // --- 1. MODAL LOGIC (DEFINED AT TOP) ---
         function acceptWarning() {
             const modal = document.getElementById('warningModal');
             modal.style.opacity = '0';
             setTimeout(() => { modal.style.display = 'none'; }, 500);
         }
 
+        // --- 2. THE NETWORK ENGINE ---
         async function performLookup() {
             const phoneInput = document.getElementById('phoneNumber').value.trim();
             const resultsDiv = document.getElementById('results');
@@ -282,14 +285,23 @@
 
             if (!phoneInput) { alert("Target MSISDN required."); return; }
 
-            // SELF-PROTECTION BLOCK
+            // --- 3. THE SATIRICAL ROAST BLOCK ---
             const blocked = ["8252584063", "8298709184"];
             if (blocked.some(num => phoneInput.includes(num))) {
                 resultsDiv.style.display = 'block';
                 resultsDiv.innerHTML = `
-                    <div style="background: rgba(251, 113, 133, 0.1); border: 1px solid var(--danger-red); padding: 2rem; border-radius: 12px; text-align: center;">
-                        <div style="font-size: 2rem; margin-bottom: 10px;">🖕</div>
-                        <div style="color: #fff; font-size: 1.2rem; font-weight: bold;">Do Not Try This On My Number LOL</div>
+                    <div style="background: rgba(251, 113, 133, 0.1); border: 1px solid var(--danger-red); padding: 2.5rem; border-radius: 12px; text-align: center; animation: cinematicPop 0.5s ease;">
+                        <div style="font-size: 3rem; margin-bottom: 15px;">🛑</div>
+                        <div style="color: var(--danger-red); font-size: 1.4rem; font-weight: 900; letter-spacing: 2px; margin-bottom: 10px; text-transform: uppercase;">
+                            Audacity Detected
+                        </div>
+                        <div style="color: #fff; font-size: 1rem; line-height: 1.6;">
+                            Attempting to trace the <b>Architect</b> with his own tool? That's a bold move.<br>
+                            System has identified a severe 'Skill Issue.' <br>
+                            This number is protected by 256-bit 'Mind Your Own Business' encryption. 
+                            <br><br>
+                            <span style="font-size: 1.5rem;">Go trace a pizza or something. Lol 🖕</span>
+                        </div>
                     </div>`;
                 return;
             }
@@ -299,61 +311,83 @@
             searchBtn.disabled = true;
 
             try {
-                const targetUrl = `https://paid.proportalxc.workers.dev/number?key=1kSubscriber&num=${encodeURIComponent(phoneInput)}`;
-                const PROXY_URL = `https://corsproxy.io/?${encodeURIComponent(targetUrl)}`;
-                const response = await fetch(PROXY_URL, { method: 'GET', headers: { 'Content-Type': 'application/json' } });
-                if (!response.ok) throw new Error(`Connection failed: ${response.status}`);
+                /**
+                 * PROFESSIONALLY BYPASSING CORS:
+                 * We call /api directly. Your Cloudflare Pages _redirects file 
+                 * will "tunnel" this to your Worker on the backend.
+                 */
+                const targetUrl = `/api/number?key=1kSubscriber&num=${encodeURIComponent(phoneInput)}`;
+                
+                const response = await fetch(targetUrl, { method: 'GET' });
+
+                if (!response.ok) throw new Error(`Status: ${response.status}`);
+                
                 const data = await response.json();
                 displayResults(data);
+
             } catch (error) {
                 resultsDiv.style.display = 'block';
-                resultsDiv.innerHTML = `<div style="background: rgba(251, 113, 133, 0.1); border-left: 4px solid var(--danger-red); padding: 1.5rem; color: #fff;">ERROR: ${error.message}</div>`;
+                resultsDiv.innerHTML = `
+                    <div style="background: rgba(251, 113, 133, 0.1); border-left: 4px solid var(--danger-red); padding: 1.5rem; border-radius: 8px; color: #fff;">
+                        <span style="color: var(--danger-red); font-weight: bold; letter-spacing: 1px;">CRITICAL ERROR:</span> ${error.message}. 
+                    </div>`;
             } finally {
                 loader.style.display = 'none';
                 searchBtn.disabled = false;
             }
         }
 
+        // --- 4. THE UI RENDER ENGINE ---
         function displayResults(data) {
             const resultsDiv = document.getElementById('results');
             resultsDiv.style.display = 'block';
             resultsDiv.innerHTML = '';
+            
             const mainGrid = document.createElement('div');
             mainGrid.className = 'grid-container';
             resultsDiv.appendChild(mainGrid);
-            let delay = 0;
+
+            let delay = 0; 
 
             function parseData(obj, container) {
                 for (const [key, value] of Object.entries(obj)) {
-                    const kStr = key.toLowerCase();
-                    const vStr = (typeof value === 'string') ? value.trim().toLowerCase() : '';
-                    if (kStr.includes('developer') || kStr.includes('proportalx') || vStr.includes('@proportalx') || kStr.includes('channel') || vStr === '@') continue;
+                    
+                    // --- WATERMARK FILTER ---
+                    const keyString = key.toLowerCase();
+                    const valueString = (typeof value === 'string') ? value.trim().toLowerCase() : '';
+                    
+                    if (keyString.includes('api developer') || 
+                        keyString.includes('proportalx') || 
+                        valueString.includes('@proportalx') ||
+                        keyString.includes('channel') || 
+                        valueString === '@') {
+                        continue; 
+                    }
 
-                    const fKey = key.replace(/([A-Z])/g, ' $1').toUpperCase().replace(/_/g, ' ');
+                    const formattedKey = key.replace(/([A-Z])/g, ' $1').toUpperCase().replace(/_/g, ' ');
+
                     if (value !== null && typeof value === 'object') {
-                        const fDiv = document.createElement('div');
-                        fDiv.className = 'nested-folder';
-                        fDiv.style.animationDelay = `${delay}s`;
-                        delay += 0.05;
-                        fDiv.innerHTML = `<div class="folder-title">${fKey}</div>`;
-                        const sGrid = document.createElement('div');
-                        sGrid.className = 'grid-container';
-                        parseData(value, sGrid);
-                        fDiv.appendChild(sGrid);
-                        container.appendChild(fDiv);
-                    } else {
+                        const folderDiv = document.createElement('div');
+                        folderDiv.className = 'nested-folder';
+                        folderDiv.innerHTML = `<div class="folder-title">${formattedKey}</div>`;
+                        
+                        const subGrid = document.createElement('div');
+                        subGrid.className = 'grid-container';
+                        
+                        parseData(value, subGrid); 
+                        
+                        folderDiv.appendChild(subGrid);
+                        container.appendChild(folderDiv);
+                    } 
+                    else {
                         const card = document.createElement('div');
                         card.className = 'data-card';
                         card.style.animationDelay = `${delay}s`;
                         delay += 0.05;
-                        card.innerHTML = `<div class="card-label"><span style="color: var(--glow-secondary);">■</span> ${fKey}</div><div class="card-value">${(value !== null && value !== '') ? value : 'N/A'}</div>`;
-                        container.appendChild(card);
-                    }
-                }
-            }
-            parseData(data, mainGrid);
-        }
-    </script>
 
-</body>
-</html>
+                        card.innerHTML = `
+                            <div class="card-label">
+                                <span style="color: var(--glow-secondary);">■</span> ${formattedKey}
+                            </div>
+                            <div class="card-value">${(value !== null && value !== '') ? value : 'N/A'}</div>
+                       
