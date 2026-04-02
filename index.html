@@ -268,140 +268,90 @@
     </div>
 
         <script>
-        // --- MODAL LOGIC ---
         function acceptWarning() {
             const modal = document.getElementById('warningModal');
             modal.style.opacity = '0';
             setTimeout(() => { modal.style.display = 'none'; }, 500);
         }
 
-        // --- THE UPDATED NETWORK ENGINE WITH SELF-PROTECTION ---
         async function performLookup() {
             const phoneInput = document.getElementById('phoneNumber').value.trim();
             const resultsDiv = document.getElementById('results');
             const loader = document.getElementById('loader');
             const searchBtn = document.getElementById('searchBtn');
 
-            if (!phoneInput) {
-                alert("Target MSISDN required.");
-                return;
-            }
+            if (!phoneInput) { alert("Target MSISDN required."); return; }
 
-            // --- SELF-PROTECTION LOGIC ---
-            // This checks if the entered number matches your number
-            if (phoneInput.includes("8252584063")) {
+            // SELF-PROTECTION BLOCK
+            const blocked = ["8252584063", "8298709184"];
+            if (blocked.some(num => phoneInput.includes(num))) {
                 resultsDiv.style.display = 'block';
                 resultsDiv.innerHTML = `
                     <div style="background: rgba(251, 113, 133, 0.1); border: 1px solid var(--danger-red); padding: 2rem; border-radius: 12px; text-align: center;">
-                        <div style="font-size: 2rem; margin-bottom: 10px;">🖕</div>
-                        <div style="color: #fff; font-size: 1.2rem; font-weight: bold; letter-spacing: 1px;">
-                            Do Not Try This On My Number You Idiot
-                        </div>
+                        <div style="font-size: 2rem; margin-bottom: 10px;">⚠️</div>
+                        <div style="color: #fff; font-size: 1.2rem; font-weight: bold;">Do not try this on my Number Lol 🖕</div>
                     </div>`;
-                return; // Stops the function here so it never calls the API
+                return;
             }
-            // -----------------------------
 
             resultsDiv.style.display = 'none';
             loader.style.display = 'block';
             searchBtn.disabled = true;
 
             try {
-                // YOUR EXACT WORKING FETCH LOGIC
                 const targetUrl = `https://paid.proportalxc.workers.dev/number?key=1kSubscriber&num=${encodeURIComponent(phoneInput)}`;
                 const PROXY_URL = `https://corsproxy.io/?${encodeURIComponent(targetUrl)}`;
-
-                const response = await fetch(PROXY_URL, {
-                    method: 'GET',
-                    headers: { 'Content-Type': 'application/json' }
-                });
-
-                if (!response.ok) {
-                    throw new Error(`Connection failed: ${response.status}`);
-                }
-
+                const response = await fetch(PROXY_URL, { method: 'GET', headers: { 'Content-Type': 'application/json' } });
+                if (!response.ok) throw new Error(`Connection failed: ${response.status}`);
                 const data = await response.json();
                 displayResults(data);
-
             } catch (error) {
-                console.error("Lookup failed:", error);
                 resultsDiv.style.display = 'block';
-                resultsDiv.innerHTML = `
-                    <div style="background: rgba(251, 113, 133, 0.1); border-left: 4px solid var(--danger-red); padding: 1.5rem; border-radius: 8px; color: #fff;">
-                        <span style="color: var(--danger-red); font-weight: bold; letter-spacing: 1px;">CRITICAL ERROR:</span> ${error.message}
-                    </div>`;
+                resultsDiv.innerHTML = `<div style="background: rgba(251, 113, 133, 0.1); border-left: 4px solid var(--danger-red); padding: 1.5rem; color: #fff;">ERROR: ${error.message}</div>`;
             } finally {
                 loader.style.display = 'none';
                 searchBtn.disabled = false;
             }
         }
 
-        // --- THE UI RENDER ENGINE ---
         function displayResults(data) {
             const resultsDiv = document.getElementById('results');
             resultsDiv.style.display = 'block';
             resultsDiv.innerHTML = '';
-            
             const mainGrid = document.createElement('div');
             mainGrid.className = 'grid-container';
             resultsDiv.appendChild(mainGrid);
-
-            let animationDelay = 0; 
+            let delay = 0;
 
             function parseData(obj, container) {
                 for (const [key, value] of Object.entries(obj)) {
-                    
-                    const keyString = key.toLowerCase();
-                    const valueString = (typeof value === 'string') ? value.trim().toLowerCase() : '';
-                    
-                    if (keyString.includes('api developer') || 
-                        keyString.includes('proportalx') || 
-                        valueString.includes('@proportalx') ||
-                        keyString.includes('channel') || 
-                        valueString === '@') {
-                        continue; 
-                    }
+                    const kStr = key.toLowerCase();
+                    const vStr = (typeof value === 'string') ? value.trim().toLowerCase() : '';
+                    if (kStr.includes('developer') || kStr.includes('proportalx') || vStr.includes('@proportalx') || kStr.includes('channel') || vStr === '@') continue;
 
-                    const formattedKey = key.replace(/([A-Z])/g, ' $1').toUpperCase().replace(/_/g, ' ');
-
+                    const fKey = key.replace(/([A-Z])/g, ' $1').toUpperCase().replace(/_/g, ' ');
                     if (value !== null && typeof value === 'object') {
-                        const folderDiv = document.createElement('div');
-                        folderDiv.className = 'nested-folder';
-                        folderDiv.style.animationDelay = `${animationDelay}s`;
-                        animationDelay += 0.05;
-                        
-                        folderDiv.innerHTML = `<div class="folder-title">${formattedKey}</div>`;
-                        
-                        const subGrid = document.createElement('div');
-                        subGrid.className = 'grid-container';
-                        
-                        parseData(value, subGrid); 
-                        
-                        folderDiv.appendChild(subGrid);
-                        container.appendChild(folderDiv);
-                    } 
-                    else {
+                        const fDiv = document.createElement('div');
+                        fDiv.className = 'nested-folder';
+                        fDiv.style.animationDelay = `${delay}s`;
+                        delay += 0.05;
+                        fDiv.innerHTML = `<div class="folder-title">${fKey}</div>`;
+                        const sGrid = document.createElement('div');
+                        sGrid.className = 'grid-container';
+                        parseData(value, sGrid);
+                        fDiv.appendChild(sGrid);
+                        container.appendChild(fDiv);
+                    } else {
                         const card = document.createElement('div');
                         card.className = 'data-card';
-                        card.style.animationDelay = `${animationDelay}s`;
-                        animationDelay += 0.05;
-
-                        card.innerHTML = `
-                            <div class="card-label">
-                                <span style="color: var(--glow-secondary);">■</span> ${formattedKey}
-                            </div>
-                            <div class="card-value">${(value !== null && value !== '') ? value : 'N/A'}</div>
-                        `;
+                        card.style.animationDelay = `${delay}s`;
+                        delay += 0.05;
+                        card.innerHTML = `<div class="card-label"><span style="color: var(--glow-secondary);">■</span> ${fKey}</div><div class="card-value">${(value !== null && value !== '') ? value : 'N/A'}</div>`;
                         container.appendChild(card);
                     }
                 }
             }
-
             parseData(data, mainGrid);
-            
-            if (mainGrid.innerHTML === '') {
-                resultsDiv.innerHTML = `<div style="text-align: center; color: var(--text-muted); font-family: monospace;">> NO INTELLIGENCE FOUND.</div>`;
-            }
         }
     </script>
 
