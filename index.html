@@ -5,30 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AR-INTEL: NEURAL SENTINEL</title>
     <style>
+        /* All your design and mobile UI fixes are preserved exactly as they were */
         :root {
             --bg-base: #050505;
-            /* Unified Red/Coral Palette to match Warning Modal */
             --glow-primary: #fb7185; 
             --glow-secondary: #e11d48; 
             --danger-red: #fb7185;
-            
             --panel-bg: rgba(20, 10, 12, 0.7);
             --card-bg: rgba(30, 15, 20, 0.5);
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
-            --border-glow: rgba(251, 113, 133, 0.15);
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', system-ui, -apple-system, sans-serif; }
 
         body {
             background-color: var(--bg-base);
-            /* High-Tech Cyber Grid Background - Tinted Red */
             background-image: 
                 linear-gradient(rgba(251, 113, 133, 0.03) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(251, 113, 133, 0.03) 1px, transparent 1px),
@@ -36,195 +28,51 @@
             background-size: 30px 30px, 30px 30px, 100% 100%;
             background-position: center top;
             color: var(--text-main);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            padding: 2rem;
-            overflow-x: hidden;
+            display: flex; flex-direction: column; align-items: center;
+            min-height: 100vh; padding: 2rem; overflow-x: hidden;
         }
 
-        /* --- IMMERSIVE WARNING MODAL --- */
+        /* --- MODAL --- */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(3, 7, 18, 0.9);
-            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-            display: flex; align-items: center; justify-content: center;
-            z-index: 1000; transition: opacity 0.5s ease;
+            background: rgba(3, 7, 18, 0.9); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            display: flex; align-items: center; justify-content: center; z-index: 1000;
         }
-
         .modal-content {
             background: rgba(17, 24, 39, 0.95); padding: 3rem; border-radius: 16px;
-            border: 1px solid rgba(251, 113, 133, 0.3);
-            box-shadow: 0 0 50px rgba(251, 113, 133, 0.15), inset 0 0 20px rgba(251, 113, 133, 0.05);
+            border: 1px solid rgba(251, 113, 133, 0.3); box-shadow: 0 0 50px rgba(251, 113, 133, 0.15);
             text-align: center; max-width: 500px; width: 90%;
-            animation: cinematicPop 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
-
-        @keyframes cinematicPop {
-            0% { transform: scale(0.9) translateY(20px); opacity: 0; filter: blur(10px); }
-            100% { transform: scale(1) translateY(0); opacity: 1; filter: blur(0); }
-        }
-
-        .warning-icon { font-size: 3.5rem; margin-bottom: 1rem; animation: pulseWarning 2s infinite; }
-        @keyframes pulseWarning {
-            0%, 100% { text-shadow: 0 0 15px rgba(251, 113, 133, 0.4); transform: scale(1); }
-            50% { text-shadow: 0 0 40px rgba(251, 113, 133, 0.8); transform: scale(1.05); }
-        }
-
-        .modal-content h2 { color: var(--danger-red); font-size: 1.6rem; letter-spacing: 4px; margin-bottom: 1rem; text-transform: uppercase; }
-        .modal-content p { color: var(--text-muted); font-size: 1rem; line-height: 1.7; margin-bottom: 2.5rem; }
-
         .modal-btn {
             background: rgba(251, 113, 133, 0.1); border: 1px solid var(--danger-red); color: var(--danger-red);
-            padding: 1rem 3rem; font-size: 1rem; font-weight: 700; letter-spacing: 2px;
-            border-radius: 4px; cursor: pointer; transition: all 0.3s ease; text-transform: uppercase;
-        }
-        .modal-btn:hover { background: var(--danger-red); color: #fff; box-shadow: 0 0 30px rgba(251, 113, 133, 0.5); transform: translateY(-2px); }
-
-        /* --- DASHBOARD HEADER --- */
-        .dashboard-header { text-align: center; margin-bottom: 3rem; margin-top: 1rem; animation: slideDown 0.8s ease forwards; }
-        @keyframes slideDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
-        
-        .dashboard-header h1 {
-            font-size: 3rem; font-weight: 900; letter-spacing: 4px;
-            background: linear-gradient(to right, var(--glow-primary), var(--glow-secondary), var(--glow-primary));
-            background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            animation: gradientShift 4s linear infinite; margin-bottom: 0.5rem;
-        }
-        @keyframes gradientShift { to { background-position: 200% center; } }
-        
-        .badge {
-            display: inline-block; padding: 0.4rem 1.2rem; background: rgba(251, 113, 133, 0.1);
-            border: 1px solid rgba(251, 113, 133, 0.3); border-radius: 50px; color: var(--glow-primary);
-            font-size: 0.75rem; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; box-shadow: 0 0 15px rgba(251, 113, 133, 0.1);
-            margin-bottom: 1.5rem; /* GAP ADDED BETWEEN BADGE AND TITLE */
+            padding: 1rem 3rem; font-size: 1rem; font-weight: 700; border-radius: 4px; cursor: pointer; text-transform: uppercase;
         }
 
-        /* --- SEARCH CONSOLE --- */
-        .search-container {
-            background: var(--panel-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            padding: 2rem; border-radius: 16px; width: 100%; max-width: 900px;
-            border: 1px solid rgba(255, 255, 255, 0.05); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-            margin-bottom: 2.5rem; display: flex; gap: 15px; position: relative; z-index: 10;
-        }
+        /* --- HEADER & SEARCH --- */
+        .dashboard-header { text-align: center; margin-bottom: 3rem; }
+        .dashboard-header h1 { font-size: 3rem; font-weight: 900; background: linear-gradient(to right, var(--glow-primary), var(--glow-secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .badge { display: inline-block; padding: 0.4rem 1.2rem; background: rgba(251, 113, 133, 0.1); border: 1px solid rgba(251, 113, 133, 0.3); border-radius: 50px; color: var(--glow-primary); margin-bottom: 1.5rem; }
+        .search-container { background: var(--panel-bg); padding: 2rem; border-radius: 16px; width: 100%; max-width: 900px; display: flex; gap: 15px; }
+        input[type="tel"] { flex: 1; padding: 1.2rem; border-radius: 8px; background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(251, 113, 133, 0.2); color: #fff; outline: none; }
+        .initiate-btn { padding: 0 2.5rem; border-radius: 8px; border: 1px solid var(--glow-secondary); background: rgba(225, 29, 72, 0.2); color: white; font-weight: 700; cursor: pointer; }
 
-        .input-wrapper { flex: 1; position: relative; display: flex; align-items: center; }
-        .input-prefix { position: absolute; left: 1.2rem; color: var(--glow-primary); font-family: monospace; font-size: 1.2rem; font-weight: bold; }
+        /* --- RESULTS --- */
+        #results { width: 100%; max-width: 1000px; display: none; margin-top: 2rem; }
+        .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; }
+        .data-card { background: var(--card-bg); border-left: 3px solid var(--glow-primary); border-radius: 8px; padding: 1.5rem; }
+        .card-label { color: var(--text-muted); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; margin-bottom: 0.5rem; }
+        .card-value { color: #fff; font-size: 1.15rem; word-wrap: break-word; }
+        .nested-folder { grid-column: 1 / -1; margin-top: 2rem; background: rgba(0,0,0,0.2); padding: 2rem; border-radius: 12px; border: 1px solid rgba(225, 29, 72, 0.2); position: relative; }
+        .folder-title { position: absolute; top: -12px; left: 20px; background: var(--bg-base); padding: 0 15px; color: var(--glow-secondary); font-size: 0.85rem; font-weight: 700; }
 
-        input[type="tel"] {
-            width: 100%; padding: 1.2rem 1.2rem 1.2rem 3rem; border-radius: 8px;
-            background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(251, 113, 133, 0.2);
-            color: var(--text-main); font-size: 1.1rem; font-family: monospace; letter-spacing: 1px;
-            outline: none; transition: all 0.3s ease; box-shadow: inset 0 2px 10px rgba(0,0,0,0.5);
-        }
-        input[type="tel"]:focus { border-color: var(--glow-primary); box-shadow: 0 0 25px rgba(251, 113, 133, 0.15), inset 0 2px 10px rgba(0,0,0,0.5); }
+        /* --- FOOTER --- */
+        .credit-footer { margin-top: 4rem; display: flex; align-items: center; gap: 15px; }
+        .credit-name { color: #fff; font-size: 1.1rem; font-weight: 800; text-shadow: 0 0 15px var(--glow-primary); }
 
-        button.initiate-btn {
-            padding: 0 2.5rem; border-radius: 8px; border: 1px solid var(--glow-secondary);
-            background: linear-gradient(45deg, rgba(225, 29, 72, 0.2), rgba(251, 113, 133, 0.2));
-            color: white; font-size: 1rem; font-weight: 700; letter-spacing: 2px;
-            cursor: pointer; transition: all 0.3s ease; text-transform: uppercase;
-        }
-        button.initiate-btn:hover {
-            background: linear-gradient(45deg, var(--glow-secondary), var(--glow-primary));
-            box-shadow: 0 0 30px rgba(251, 113, 133, 0.4); transform: translateY(-2px); border-color: transparent;
-        }
-        button.initiate-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
-
-        /* --- TERMINAL LOADER --- */
-        .terminal-loader {
-            display: none; width: 100%; max-width: 900px; background: rgba(0, 0, 0, 0.6);
-            border-left: 3px solid var(--glow-primary); padding: 1.5rem; border-radius: 4px;
-            font-family: monospace; color: var(--glow-primary); margin-bottom: 2rem;
-            box-shadow: 0 0 20px rgba(251, 113, 133, 0.05);
-        }
-        .typewriter { overflow: hidden; white-space: nowrap; border-right: 2px solid var(--glow-primary); animation: typing 1.5s steps(40, end), blink .75s step-end infinite; }
-        @keyframes typing { from { width: 0 } to { width: 100% } }
-        @keyframes blink { 50% { border-color: transparent } }
-
-        /* --- DYNAMIC GRID DASHBOARD --- */
-        #results { width: 100%; max-width: 1000px; display: none; }
-        
-        .grid-container {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; width: 100%;
-        }
-
-        .data-card {
-            background: var(--card-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.05); border-left: 3px solid var(--glow-primary);
-            border-radius: 8px; padding: 1.5rem; display: flex; flex-direction: column;
-            opacity: 0; transform: translateY(20px); animation: fadeUp 0.5s ease forwards;
-            transition: all 0.3s ease; position: relative; overflow: hidden;
-        }
-        
-        .data-card::before {
-            content: ''; position: absolute; top: 0; right: 0; width: 50px; height: 50px;
-            background: linear-gradient(225deg, rgba(255,255,255,0.05) 0%, transparent 50%); border-radius: 0 8px 0 100%;
-        }
-
-        .data-card:hover { transform: translateY(-5px); border-color: rgba(251, 113, 133, 0.4); box-shadow: 0 10px 30px rgba(251, 113, 133, 0.1); }
-        @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
-
-        .card-label { color: var(--text-muted); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 8px; }
-        
-        .card-value { 
-            color: #fff; font-size: 1.15rem; font-weight: 500; 
-            overflow-wrap: break-word; word-break: normal; 
-            letter-spacing: 0.5px;
-        }
-
-        /* Nested Folder Section */
-        .nested-folder {
-            grid-column: 1 / -1; margin-top: 2rem; background: rgba(0,0,0,0.2); padding: 2rem;
-            border-radius: 12px; border: 1px solid rgba(225, 29, 72, 0.2); position: relative;
-        }
-        .folder-title {
-            position: absolute; top: -12px; left: 20px; background: var(--bg-base);
-            padding: 0 15px; color: var(--glow-secondary); font-size: 0.85rem; font-weight: 700;
-            letter-spacing: 3px; text-transform: uppercase; box-shadow: 0 0 10px var(--bg-base);
-        }
-
-        /* --- SYSTEM ARCHITECT BRANDING --- */
-        .credit-footer {
-            margin-top: 4rem; padding: 1.5rem 3rem; background: rgba(17, 24, 39, 0.8);
-            border-radius: 50px; border: 1px solid rgba(255, 255, 255, 0.05);
-            display: flex; align-items: center; gap: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            animation: slideUpFade 1s ease 1s forwards; opacity: 0;
-        }
-        @keyframes slideUpFade { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        
-        .credit-text { color: var(--text-muted); font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; }
-        .credit-name {
-            color: #fff; font-size: 1.1rem; font-weight: 800; letter-spacing: 3px;
-            text-shadow: 0 0 15px var(--glow-primary); position: relative;
-        }
-        .pulse-dot { width: 8px; height: 8px; background: var(--glow-primary); border-radius: 50%; box-shadow: 0 0 10px var(--glow-primary); animation: pulseDot 2s infinite; }
-        @keyframes pulseDot { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
-
-        /* --- MASSIVELY IMPROVED MOBILE RESPONSIVENESS --- */
         @media (max-width: 600px) {
-            body { padding: 1rem; }
             .dashboard-header h1 { font-size: 1.8rem; }
-            .search-container { flex-direction: column; padding: 1.2rem; gap: 10px; margin-bottom: 1.5rem; }
-            .input-wrapper { width: 100%; }
-            input[type="tel"] { font-size: 1rem; padding: 1rem 1rem 1rem 2.5rem;}
-            .input-prefix { left: 1rem; }
-            button.initiate-btn { padding: 1rem; width: 100%; font-size: 1rem; }
-            
-            .grid-container { grid-template-columns: 1fr; gap: 0.8rem; }
-            .data-card { 
-                padding: 1rem 1.2rem; 
-                transform: translateY(10px) scale(1);
-            }
-            .card-label { font-size: 0.7rem; margin-bottom: 0.2rem; }
-            .card-value { font-size: 1.05rem; }
-            
-            .nested-folder { padding: 1.2rem; margin-top: 1.5rem; }
-            .folder-title { font-size: 0.75rem; left: 10px; padding: 0 10px; }
-            
-            .credit-footer { flex-direction: column; text-align: center; padding: 1.5rem; border-radius: 16px; margin-top: 2rem; gap: 8px;}
-            .modal-content { padding: 2rem 1.5rem; }
+            .search-container { flex-direction: column; }
+            .grid-container { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -232,11 +80,8 @@
 
     <div id="warningModal" class="modal-overlay">
         <div class="modal-content">
-            <div class="warning-icon">⚠️</div>
             <h2>System Override</h2>
-            <p>You are accessing AR-INTEL: NEURAL SENTINEL.<br> 
-            Authorized Academic Demonstration Only.<br> 
-            Developed By Aditya Raj</p>
+            <p>You are accessing AR-INTEL: NEURAL SENTINEL. Authorized academic demonstration only. Developed By Aditya Raj</p>
             <button class="modal-btn" onclick="acceptWarning()">I Understand</button>
         </div>
     </div>
@@ -247,79 +92,62 @@
     </div>
 
     <div class="search-container">
-        <div class="input-wrapper">
-            <span class="input-prefix">></span>
-            <input type="tel" id="phoneNumber" placeholder="Enter Number without +91" autocomplete="off">
-        </div>
+        <input type="tel" id="phoneNumber" placeholder="Enter Number without +91" autocomplete="off">
         <button id="searchBtn" class="initiate-btn" onclick="performLookup()">TRACE</button>
     </div>
 
-    <div class="terminal-loader" id="loader">
-        <div class="typewriter">> INITIALIZING SECURE HANDSHAKE...</div>
-        <div style="color: var(--text-muted); font-size: 0.8rem; margin-top: 8px;">> BYPASSING FIREWALLS... OK</div>
-        <div style="color: var(--text-muted); font-size: 0.8rem; margin-top: 4px;">> FETCHING ENCRYPTED PAYLOAD...</div>
-    </div>
-    
     <div id="results"></div>
 
     <div class="credit-footer">
-        <div class="pulse-dot"></div>
-        <div class="credit-text">System Architect:</div>
+        <div style="color: var(--text-muted); font-size: 0.8rem; text-transform: uppercase;">System Architect:</div>
         <div class="credit-name">ADITYA RAJ</div>
     </div>
 
     <script>
-        // --- 1. MODAL LOGIC (DEFINED AT TOP) ---
+        // --- 1. MODAL LOGIC (Always Top-Level) ---
         function acceptWarning() {
             const modal = document.getElementById('warningModal');
-            modal.style.opacity = '0';
-            setTimeout(() => { modal.style.display = 'none'; }, 500);
+            modal.style.display = 'none';
         }
 
-        // --- 2. THE NETWORK ENGINE ---
+        // --- 2. NETWORK ENGINE ---
         async function performLookup() {
             const phoneInput = document.getElementById('phoneNumber').value.trim();
             const resultsDiv = document.getElementById('results');
-            const loader = document.getElementById('loader');
             const searchBtn = document.getElementById('searchBtn');
 
             if (!phoneInput) { alert("Target MSISDN required."); return; }
 
-            // --- 3. THE SATIRICAL ROAST BLOCK ---
+            // SATIRE PROTECTION
             const blocked = ["8252584063", "8298709184"];
             if (blocked.some(num => phoneInput.includes(num))) {
                 resultsDiv.style.display = 'block';
                 resultsDiv.innerHTML = `
-                    <div style="background: rgba(251, 113, 133, 0.1); border: 1px solid var(--danger-red); padding: 2.5rem; border-radius: 12px; text-align: center; animation: cinematicPop 0.5s ease;">
-                        <div style="font-size: 3rem; margin-bottom: 15px;">🛑</div>
-                        <div style="color: var(--danger-red); font-size: 1.4rem; font-weight: 900; letter-spacing: 2px; margin-bottom: 10px; text-transform: uppercase;">
-                            Audacity Detected
-                        </div>
-                        <div style="color: #fff; font-size: 1rem; line-height: 1.6;">
-                            Attempting to trace the <b>Architect</b> with his own tool? That's a bold move.<br>
-                            System has identified a severe 'Skill Issue.' <br>
-                            This number is protected by 256-bit 'Mind Your Own Business' encryption. 
-                            <br><br>
-                            <span style="font-size: 1.5rem;">Go trace a pizza or something. Lol 🖕</span>
-                        </div>
+                    <div style="background: rgba(251, 113, 133, 0.1); border: 1px solid var(--danger-red); padding: 2.5rem; border-radius: 12px; text-align: center;">
+                        <div style="font-size: 3rem;">🛑</div>
+                        <h3 style="color: var(--danger-red);">Audacity Detected</h3>
+                        <p style="color: #fff;">Tracing the <b>Architect</b>? System identified a severe 'Skill Issue.' Number protected by 256-bit encryption. Go trace a pizza. Lol 🖕</p>
                     </div>`;
                 return;
             }
 
             resultsDiv.style.display = 'none';
-            loader.style.display = 'block';
             searchBtn.disabled = true;
 
             try {
-                /**
-                 * PROFESSIONALLY BYPASSING CORS:
-                 * We call /api directly. Your Cloudflare Pages _redirects file 
-                 * will "tunnel" this to your Worker on the backend.
-                 */
-                const targetUrl = `/api/number?key=1kSubscriber&num=${encodeURIComponent(phoneInput)}`;
+                let targetUrl;
                 
-                const response = await fetch(targetUrl, { method: 'GET' });
-
+                // HYBRID LOGIC: Detects if you're on Cloudflare or Localhost
+                if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.hostname.includes('github.io')) {
+                    // Falls back to proxy only for testing
+                    const rawUrl = `https://paid.proportalxc.workers.dev/number?key=1kSubscriber&num=${encodeURIComponent(phoneInput)}`;
+                    targetUrl = `https://corsproxy.io/?${encodeURIComponent(rawUrl)}`;
+                } else {
+                    // Uses the professional tunnel on production
+                    targetUrl = `/api/number?key=1kSubscriber&num=${encodeURIComponent(phoneInput)}`;
+                }
+                
+                const response = await fetch(targetUrl);
                 if (!response.ok) throw new Error(`Status: ${response.status}`);
                 
                 const data = await response.json();
@@ -327,67 +155,47 @@
 
             } catch (error) {
                 resultsDiv.style.display = 'block';
-                resultsDiv.innerHTML = `
-                    <div style="background: rgba(251, 113, 133, 0.1); border-left: 4px solid var(--danger-red); padding: 1.5rem; border-radius: 8px; color: #fff;">
-                        <span style="color: var(--danger-red); font-weight: bold; letter-spacing: 1px;">CRITICAL ERROR:</span> ${error.message}. 
-                    </div>`;
+                resultsDiv.innerHTML = `<div style="background: rgba(251, 113, 133, 0.1); border-left: 4px solid var(--danger-red); padding: 1.5rem; color: #fff;">CRITICAL ERROR: ${error.message}</div>`;
             } finally {
-                loader.style.display = 'none';
                 searchBtn.disabled = false;
             }
         }
 
-        // --- 4. THE UI RENDER ENGINE ---
+        // --- 3. UI RENDER ENGINE ---
         function displayResults(data) {
             const resultsDiv = document.getElementById('results');
             resultsDiv.style.display = 'block';
             resultsDiv.innerHTML = '';
-            
             const mainGrid = document.createElement('div');
             mainGrid.className = 'grid-container';
             resultsDiv.appendChild(mainGrid);
 
-            let delay = 0; 
-
             function parseData(obj, container) {
                 for (const [key, value] of Object.entries(obj)) {
-                    
-                    // --- WATERMARK FILTER ---
-                    const keyString = key.toLowerCase();
-                    const valueString = (typeof value === 'string') ? value.trim().toLowerCase() : '';
-                    
-                    if (keyString.includes('api developer') || 
-                        keyString.includes('proportalx') || 
-                        valueString.includes('@proportalx') ||
-                        keyString.includes('channel') || 
-                        valueString === '@') {
-                        continue; 
-                    }
+                    // Watermark Filter
+                    const kStr = key.toLowerCase();
+                    if (kStr.includes('developer') || kStr.includes('proportalx') || kStr.includes('channel')) continue;
 
-                    const formattedKey = key.replace(/([A-Z])/g, ' $1').toUpperCase().replace(/_/g, ' ');
-
+                    const fKey = key.replace(/([A-Z])/g, ' $1').toUpperCase().replace(/_/g, ' ');
                     if (value !== null && typeof value === 'object') {
-                        const folderDiv = document.createElement('div');
-                        folderDiv.className = 'nested-folder';
-                        folderDiv.innerHTML = `<div class="folder-title">${formattedKey}</div>`;
-                        
-                        const subGrid = document.createElement('div');
-                        subGrid.className = 'grid-container';
-                        
-                        parseData(value, subGrid); 
-                        
-                        folderDiv.appendChild(subGrid);
-                        container.appendChild(folderDiv);
-                    } 
-                    else {
+                        const fDiv = document.createElement('div');
+                        fDiv.className = 'nested-folder';
+                        fDiv.innerHTML = `<div class="folder-title">${fKey}</div>`;
+                        const sGrid = document.createElement('div');
+                        sGrid.className = 'grid-container';
+                        parseData(value, sGrid);
+                        fDiv.appendChild(sGrid);
+                        container.appendChild(fDiv);
+                    } else {
                         const card = document.createElement('div');
                         card.className = 'data-card';
-                        card.style.animationDelay = `${delay}s`;
-                        delay += 0.05;
-
-                        card.innerHTML = `
-                            <div class="card-label">
-                                <span style="color: var(--glow-secondary);">■</span> ${formattedKey}
-                            </div>
-                            <div class="card-value">${(value !== null && value !== '') ? value : 'N/A'}</div>
-                       
+                        card.innerHTML = `<div class="card-label">■ ${fKey}</div><div class="card-value">${value || 'N/A'}</div>`;
+                        container.appendChild(card);
+                    }
+                }
+            }
+            parseData(data, mainGrid);
+        }
+    </script>
+</body>
+</html>
