@@ -98,7 +98,7 @@
             display: inline-block; padding: 0.4rem 1.2rem; background: rgba(251, 113, 133, 0.1);
             border: 1px solid rgba(251, 113, 133, 0.3); border-radius: 50px; color: var(--glow-primary);
             font-size: 0.75rem; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; box-shadow: 0 0 15px rgba(251, 113, 133, 0.1);
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.5rem; /* THIS IS THE NEW GAP ADDED */
         }
 
         /* --- SEARCH CONSOLE --- */
@@ -233,8 +233,8 @@
     <div id="warningModal" class="modal-overlay">
         <div class="modal-content">
             <div class="warning-icon">⚠️</div>
-            <h2>Under Maintenance</h2>
-            <p>You are accessing a secured digital forensics environment.<br> This portal is for testing purpose only <br> This will Provide 80% accurate Data,<br> Currenly Because Of very High traffic Proxy Server is destroyed so we need some time to fix this gay proxy things so please wait, Thanks for your understanding now please click on I understand Button to prove you understood <br>
+            <h2>System Override</h2>
+            <p>You are accessing a secured digital forensics environment.<br> This portal is for testing purpose only <br> This will Provide 80% accurate Data,<br> Use with Responsibly <br>
             Devloped By Aditya Raj</p>
             <button class="modal-btn" onclick="acceptWarning()">I Understand</button>
         </div>
@@ -267,7 +267,7 @@
         <div class="credit-name">ADITYA RAJ</div>
     </div>
 
-    <script>
+        <script>
         function acceptWarning() {
             const modal = document.getElementById('warningModal');
             modal.style.opacity = '0';
@@ -288,19 +288,8 @@
                 resultsDiv.style.display = 'block';
                 resultsDiv.innerHTML = `
                     <div style="background: rgba(251, 113, 133, 0.1); border: 1px solid var(--danger-red); padding: 2rem; border-radius: 12px; text-align: center;">
-                        <div style="font-size: 2rem; margin-bottom: 10px;">🤡</div>
-                        <div style="color: #fff; font-size: 1.2rem; font-weight: bold;">Attempting to
-trace the <b>Architect</b> with his own tool? <br> That's a bold move.<br>
-
-System has
-identified a severe 'Skill Issue.' <br> This number
-is protected by 256-bit 'Mind Your Own Business' encryption.
-
-<br><br>
-
-<span
-
-style="font-size: 1.5rem;">Go trace a pizza or something. Lol 🖕 </span></div>
+                        <div style="font-size: 2rem; margin-bottom: 10px;">⚠️</div>
+                        <div style="color: #fff; font-size: 1.2rem; font-weight: bold;">Do not try this on my Number Lol 🖕</div>
                     </div>`;
                 return;
             }
@@ -310,14 +299,9 @@ style="font-size: 1.5rem;">Go trace a pizza or something. Lol 🖕 </span></div>
             searchBtn.disabled = true;
 
             try {
-                // Connects directly to the API, proxy logic removed since it is now hosted directly on Cloudflare
                 const targetUrl = `https://paid.proportalxc.workers.dev/number?key=1kSubscriber&num=${encodeURIComponent(phoneInput)}`;
-                
-                const response = await fetch(targetUrl, { 
-                    method: 'GET', 
-                    headers: { 'Content-Type': 'application/json' } 
-                });
-                
+                const PROXY_URL = `https://corsproxy.io/?${encodeURIComponent(targetUrl)}`;
+                const response = await fetch(PROXY_URL, { method: 'GET', headers: { 'Content-Type': 'application/json' } });
                 if (!response.ok) throw new Error(`Connection failed: ${response.status}`);
                 const data = await response.json();
                 displayResults(data);
