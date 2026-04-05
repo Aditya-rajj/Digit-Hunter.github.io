@@ -1,7 +1,6 @@
 // One-Time Token Verification
 const VALID_TOKEN = "INCOGNITO";
 
-// THE OLD SNARKY MESSAGES ARRAY
 const rejectionMessages = [
     "Nice try. That token is as fake as your chances—come back with a real one or disappear.",
     "Nice try. That token expired before your confidence did. Try again… or don’t.",
@@ -11,20 +10,31 @@ const rejectionMessages = [
     "Wrong token. Right attitude… just aimed at the wrong place....Moye Moye"
 ];
 
-// Tracks which tool the user clicked on from the Bento grid
 let activeToolId = ''; 
 
-// YOUR REQUESTED DYNAMIC LOADER MESSAGES
 const loaderMessages = [
     "Authenticating secure payload...",
     "Fatching Avilable Public Data...",
     "Hold My Beer...",
-    "Privacy Is A Myth Buddy",
+    "It's take a Few Minutes....",
     "Don't look at this too much...",
-    "It's take a Few Minutes...."
+    "Privacy is a myth..."
 ];
 
 const warningIconSVG = `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>`;
+
+// --- KEYBOARD SHIFT FIX FOR ANDROID WEBVIEW ---
+// When an input is focused, wait for the keyboard to slide up, then scroll the input to the center of the screen
+document.addEventListener("DOMContentLoaded", () => {
+    const inputs = document.querySelectorAll('input');
+    inputs.forEach(input => {
+        input.addEventListener('focus', function() {
+            setTimeout(() => {
+                this.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 300); // 300ms delay matches standard Android keyboard pop-up speed
+        });
+    });
+});
 
 // --- 1. MODAL & AUTH LOGIC ---
 function verifyAndEnter() {
@@ -32,17 +42,13 @@ function verifyAndEnter() {
     const errorDiv = document.getElementById('modalError');
     
     if (inputToken === VALID_TOKEN) {
-        // Success! Hide modal.
         document.getElementById('warningModal').style.opacity = '0';
         setTimeout(() => { document.getElementById('warningModal').style.display = 'none'; }, 400);
     } else {
-        // Fail. Pick an old random message and show it inside the modal.
         const randomMsg = rejectionMessages[Math.floor(Math.random() * rejectionMessages.length)];
-        
         errorDiv.style.display = 'block';
         errorDiv.innerText = randomMsg;
         
-        // Shake animation for rejection
         const modalContent = document.querySelector('.modal-content');
         modalContent.style.transform = 'translateX(-10px)';
         setTimeout(() => modalContent.style.transform = 'translateX(10px)', 50);
@@ -50,7 +56,7 @@ function verifyAndEnter() {
     }
 }
 
-// --- 2. SINGLE PAGE APP LOGIC (WITH ANDROID BACK BUTTON SUPPORT) ---
+// --- 2. SINGLE PAGE APP LOGIC ---
 function openTool(toolId, title, placeholderText) {
     activeToolId = toolId; 
     
@@ -63,20 +69,20 @@ function openTool(toolId, title, placeholderText) {
     document.getElementById('bentoView').style.display = 'none';
     document.getElementById('toolView').style.display = 'flex';
 
-    // Push state to history for Android physical back button
     history.pushState({ view: 'tool' }, '', '#tool');
+    
+    // Auto-scroll to top when opening tool for clean view
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// Triggers when the on-screen UI back button is pressed
 function closeTool() {
     if (history.state && history.state.view === 'tool') {
-        history.back(); // Triggers the window popstate event
+        history.back(); 
     } else {
         executeCloseTool();
     }
 }
 
-// Executes the visual UI change
 function executeCloseTool() {
     activeToolId = '';
     document.getElementById('results').innerHTML = '';
@@ -85,7 +91,6 @@ function executeCloseTool() {
     document.getElementById('bentoView').style.display = 'grid'; 
 }
 
-// Listens for the Android physical back button
 window.addEventListener('popstate', (e) => {
     if (!e.state || e.state.view !== 'tool') {
         executeCloseTool();
@@ -114,16 +119,18 @@ async function performLookup() {
         return; 
     }
 
-    // OLD Master Self-Protection Block
     const blocked = ["8252584063", "8298709184"];
     if (blocked.some(num => inputValue.includes(num))) {
-        showError("You really typed this number...and expected success ? Intresting..");
+        showError("Do not try this on my Number Lol 🖕");
         return;
     }
 
     resultsDiv.style.display = 'none';
     loader.style.display = 'block';
     searchBtn.disabled = true;
+    
+    // Remove focus from keyboard so it slides down gracefully while loading
+    document.getElementById('targetInput').blur();
 
     let msgIndex = 0;
     loaderText.innerText = loaderMessages[msgIndex];
@@ -135,6 +142,11 @@ async function performLookup() {
     try {
         const data = await fetchTargetData(activeToolId, inputValue); 
         displayResults(data); 
+        
+        // Slight scroll to show results better once rendered
+        setTimeout(() => {
+            resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 100);
     } catch (error) {
         showError(`System Protocol Error: ${error.message}`);
     } finally {
