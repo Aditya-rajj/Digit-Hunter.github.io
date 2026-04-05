@@ -1,4 +1,4 @@
-const VALID_TOKEN = "ADMIN123";
+const VALID_TOKEN = "INCOGNITO";
 
 const rejectionMessages = [
     "Nice try. That token is as fake as your chances—come back with a real one or disappear.",
