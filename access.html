@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#000000">
+    <meta name="mobile-web-app-capable" content="yes">
+    
+    <title>Get Access | Digit-Hunter</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css"> 
+    
+    <style>
+        /* Specific tweaks for the reading layout to match the theme */
+        .content-container {
+            width: 100%;
+            max-width: 750px;
+            margin-bottom: 3rem;
+            padding: 2.5rem;
+            text-align: left;
+        }
+        
+        .token-display-box {
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid var(--glass-border);
+            padding: 2rem;
+            border-radius: 20px;
+            margin-bottom: 2.5rem;
+            text-align: center;
+            box-shadow: inset 0 2px 15px rgba(0,0,0,0.8);
+        }
+
+        .token-label {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 1rem;
+        }
+
+        .the-token {
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: 3px;
+            color: var(--accent-color);
+            margin-bottom: 1.5rem;
+            text-shadow: 0 0 20px rgba(10, 132, 255, 0.5);
+        }
+
+        /* Typography for Terms and Conditions */
+        .content-container h1 { font-size: 1.8rem; margin-bottom: 1.5rem; color: var(--text-primary); text-align: center; }
+        .content-container h3 { font-size: 1.2rem; margin-top: 2rem; margin-bottom: 1rem; color: var(--text-primary); border-bottom: 1px solid var(--glass-highlight); padding-bottom: 0.5rem; }
+        .content-container p { color: var(--text-secondary); line-height: 1.6; margin-bottom: 1rem; font-size: 0.95rem; font-weight: 400; }
+        .content-container ul { color: var(--text-secondary); margin-left: 1.5rem; margin-bottom: 1.5rem; font-size: 0.95rem; line-height: 1.6; }
+        .content-container li { margin-bottom: 0.5rem; }
+        .content-container strong { color: #ffffff; }
+
+        .back-nav {
+            display: flex; align-items: center; justify-content: flex-start;
+            margin-bottom: 2rem; width: 100%; max-width: 750px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="back-nav appear-anim">
+        <button class="back-btn" onclick="window.location.href='index.html'" aria-label="Go Back">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+        </button>
+    </div>
+
+    <div class="dashboard-header appear-anim delay-1" style="margin-bottom: 1.5rem; margin-top: 0;">
+        <h1 class="gradient-text" style="font-size: 2.8rem;">Authorization Portal</h1>
+    </div>
+
+    <div class="content-container glass-panel appear-anim delay-2">
+        
+        <div class="token-display-box">
+            <div class="token-label">Current Active Token</div>
+            
+            <div class="the-token" id="tokenText">Loading...</div>
+            
+            <button id="copyBtn" class="apple-btn extract-btn" onclick="copyToken()" style="width: auto; padding: 1rem 2rem; border-radius: 12px; font-size: 0.95rem;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px;"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+            </button>
+        </div>
+
+        <h1>TERMS AND CONDITIONS OF USE</h1>
+        <p><strong>Effective Date:</strong> April 5, 2026<br>
+        <strong>Application Name:</strong> Digit-Hunter (OSINT INTEL CORE)<br>
+        <strong>Developer & Maintainer:</strong> Aditya Raj</p>
+
+        <h3>1. ACCEPTANCE OF TERMS</h3>
+        <p>By accessing, authenticating via access token, or otherwise using the Digit-Hunter application (hereinafter referred to as the "Tool"), you agree to be bound by these Terms and Conditions ("Terms"). If you do not agree to all the terms and conditions set forth below, you are strictly prohibited from using the Tool and must disconnect immediately.</p>
+
+        <h3>2. DESCRIPTION OF SERVICE</h3>
+        <p>Digit-Hunter is an Open Source Intelligence (OSINT) aggregation application. It acts as an interface to route user-initiated queries through third-party APIs to retrieve publicly accessible data regarding telecommunications, vehicle registration (RTO), identity (UIDAI), financial routing (IFSC), network forensics (IP), postal indices, and corporate registries (GST). The Tool does not host, store, or generate this data; it merely acts as a search conduit.</p>
+
+        <h3>3. INTENDED USE & RESTRICTIONS</h3>
+        <p>The Tool is designed and provided <strong>strictly for educational, testing, and authorized digital forensics purposes.</strong> By using the Tool, you explicitly agree that you will NOT:</p>
+        <ul>
+            <li>Use the Tool to stalk, harass, threaten, or intimidate any individual.</li>
+            <li>Use the data retrieved for identity theft, financial fraud, or any illegal activities.</li>
+            <li>Attempt to bypass, reverse-engineer, or brute-force the authentication system.</li>
+            <li>Automate queries, scrape the Tool's interface, or overload the proxy routing nodes.</li>
+            <li>Sell, redistribute, or monetize the data extracted through this application.</li>
+        </ul>
+
+        <h3>4. DATA ACCURACY AND SOURCING</h3>
+        <p>You acknowledge that the Tool operates by aggregating data from publicly available sources and third-party endpoints.</p>
+        <ul>
+            <li><strong>No Guarantee of Accuracy:</strong> The developer does not warrant the accuracy, completeness, or reliability of the data. Data retrieved is estimated to be highly accurate but may contain outdated or anomalous information.</li>
+            <li><strong>No Endorsement:</strong> The display of data does not constitute an endorsement or verification of that data by the developer.</li>
+            <li><strong>As-Is Basis:</strong> All information is provided on an "AS IS" and "AS AVAILABLE" basis without any warranties of any kind.</li>
+        </ul>
+
+        <h3>5. USER ACCOUNTABILITY & LEGAL COMPLIANCE</h3>
+        <p>You are solely responsible and legally liable for how you utilize the data obtained through Digit-Hunter. You agree to comply with all applicable local, state, national, and international laws regarding data privacy and digital communication. The developers of this Tool assume absolutely no responsibility for the actions of the end-user.</p>
+
+        <h3>6. ACCESS, AUTHENTICATION, AND REVOCATION</h3>
+        <p>Access to the Tool requires a valid Access Token. The administration reserves the right to monitor token usage for abuse and retains the unilateral right to terminate, suspend, or revoke access to the Tool at any time, without prior notice, for any reason, including but not limited to a violation of these Terms.</p>
+
+        <h3>7. LIMITATION OF LIABILITY</h3>
+        <p>To the maximum extent permitted by applicable law, in no event shall Aditya Raj, the system architects, the API developers, or any affiliated parties be liable for any direct, indirect, punitive, incidental, special, or consequential damages whatsoever (including, without limitation, damages for loss of use, data, or profits) arising out of or in any way connected with the use or performance of the Tool.</p>
+
+        <h3>8. INDEMNIFICATION</h3>
+        <p>You agree to indemnify, defend, and hold harmless the developers and maintainers of Digit-Hunter from and against any and all claims, liabilities, damages, losses, or expenses (including reasonable attorney's fees and costs) arising out of or in any way connected with your access to or use of the Tool, or your violation of these Terms.</p>
+
+    </div>
+
+    <script>
+        // Fetches main.js, reads the text, and searches for your VALID_TOKEN variable
+        async function fetchTokenAutomatically() {
+            try {
+                const response = await fetch('main.js');
+                const jsText = await response.text();
+                
+                // Uses Regex to find exactly what you typed between the quotes in main.js
+                const match = jsText.match(/const\s+VALID_TOKEN\s*=\s*["']([^"']+)["']/);
+                
+                if (match && match[1]) {
+                    document.getElementById('tokenText').innerText = match[1];
+                } else {
+                    document.getElementById('tokenText').innerText = "UNAVAILABLE";
+                }
+            } catch (error) {
+                document.getElementById('tokenText').innerText = "SYSTEM_ERROR";
+                console.error("Could not load token from main.js:", error);
+            }
+        }
+
+        // Copies the text and shows a satisfying green "Copied!" animation
+        function copyToken() {
+            const tokenToCopy = document.getElementById('tokenText').innerText;
+            
+            if(tokenToCopy === "Loading..." || tokenToCopy === "UNAVAILABLE") return;
+
+            navigator.clipboard.writeText(tokenToCopy).then(() => {
+                const btn = document.getElementById('copyBtn');
+                btn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px;"><polyline points="20 6 9 17 4 12"></polyline></svg> Copied!`;
+                btn.style.background = "#32d74b"; // Apple Success Green
+                btn.style.boxShadow = "0 4px 20px rgba(50, 215, 75, 0.4)";
+                
+                setTimeout(() => {
+                    btn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px;"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> Copy Access Key`;
+                    btn.style.background = "var(--accent-gradient)";
+                    btn.style.boxShadow = "var(--btn-glow)";
+                }, 2000);
+            });
+        }
+
+        // Run the fetch as soon as the page loads
+        window.onload = fetchTokenAutomatically;
+    </script>
+</body>
+</html>
